@@ -96,36 +96,47 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - Adjust top position */}
       <motion.div 
-        className="md:hidden fixed inset-x-0 top-14 sm:top-16 bg-black/95 backdrop-blur-lg"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ 
-          opacity: isOpen ? 1 : 0,
-          y: isOpen ? 0 : -20,
-          height: isOpen ? 'auto' : 0
+        className={`md:hidden fixed inset-x-2 sm:inset-x-0 top-19 sm:top-20 bg-black/95 backdrop-blur-lg rounded-xl sm:rounded-none
+                   ${isOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}
+        initial="closed"
+        animate={isOpen ? "open" : "closed"}
+        variants={{
+          open: {
+            opacity: 1,
+            height: 'auto',
+            visibility: 'visible',
+            transition: {
+              duration: 0.3,
+              ease: "easeOut",
+            }
+          },
+          closed: {
+            opacity: 0,
+            height: 0,
+            visibility: 'hidden',
+            transition: {
+              duration: 0.3,
+              ease: "easeIn",
+            }
+          }
         }}
-        transition={{ duration: 0.3, ease: "easeInOut" }}
       >
-        <motion.div className="py-2 px-4">
-          {navItems.map((item, index) => (
-            <motion.div
+        <div className="py-2 px-4">
+          {navItems.map((item) => (
+            <Link
               key={item.path}
-              initial={{ x: -20, opacity: 0 }}
-              animate={{ x: isOpen ? 0 : -20, opacity: isOpen ? 1 : 0 }}
-              transition={{ delay: index * 0.1 }}
+              to={item.path}
+              onClick={() => setIsOpen(false)}
+              className={`block py-3 text-[#ffd54f] text-lg border-b border-[#ffd54f]/10
+                       hover:bg-[#ffd54f]/10 rounded-lg px-4 transition-all duration-300
+                       ${isOpen ? 'opacity-100' : 'opacity-0'}`}
             >
-              <Link
-                to={item.path}
-                onClick={() => setIsOpen(false)}
-                className="block py-3 text-[#ffd54f] text-lg border-b border-[#ffd54f]/10
-                         hover:bg-[#ffd54f]/10 rounded-lg px-4 transition-all duration-300"
-              >
-                {item.title}
-              </Link>
-            </motion.div>
+              {item.title}
+            </Link>
           ))}
-        </motion.div>
+        </div>
       </motion.div>
     </motion.nav>
   );

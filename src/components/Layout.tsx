@@ -15,7 +15,7 @@ const Layout = ({ children }: LayoutProps) => {
     <div className="flex flex-col min-h-screen font-['Cairo']">
       <Background />
       <Navbar />
-      <main className="relative z-10 flex-grow pt-14 sm:pt-16">
+      <main className="relative z-10 flex-grow pt-20 sm:pt-24">
         {children}
       </main>
       {!hideFooter && <Footer />}
