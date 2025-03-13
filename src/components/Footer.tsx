@@ -25,6 +25,14 @@ const Footer = () => {
               <Link to="/contact" className="text-gray-400 hover:text-[#ffd54f] text-xs sm:text-sm">
                 Contact
               </Link>
+              <Link 
+                to="/special-thanks" 
+                className="text-[#ffd54f] hover:text-[#ffd54f]/80 text-xs sm:text-sm 
+                           px-3 py-1 rounded-full border border-[#ffd54f]/30 
+                           hover:border-[#ffd54f]/60 transition-all duration-300"
+              >
+                Special Thanks ✨
+              </Link>
             </div>
             <div className="flex items-center gap-4">
               <a 

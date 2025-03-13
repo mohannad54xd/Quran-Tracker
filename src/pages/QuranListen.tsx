@@ -236,7 +236,7 @@ const QuranListen = () => {
                   </div>
                   
                   {isQariDropdownOpen && (
-                    <div className="absolute z-50 w-full mt-1 max-h-60 overflow-y-auto 
+                    <div className="absolute z-50 w-full mt-1 max-h-[400px] overflow-y-auto 
                                 bg-black/90 backdrop-blur-lg rounded-md border border-[rgba(255,213,79,0.2)]">
                       <input
                         type="text"
@@ -251,15 +251,35 @@ const QuranListen = () => {
                         <button
                           key={qari.identifier}
                           className="w-full text-left px-3 py-2 hover:bg-[rgba(255,213,79,0.1)] 
-                                  text-[#ffd54f] flex items-center justify-between"
+                                  text-[#ffd54f] flex items-center gap-3"
                           onClick={() => {
                             handleQariChange(qari);
                             setQariSearch('');
                             setIsQariDropdownOpen(false);
                           }}
                         >
-                          <span className="truncate">{qari.name}</span>
-                          {selectedQari.identifier === qari.identifier && <span>✓</span>}
+                          {qari.photoUrl ? (
+                            <img 
+                              src={qari.photoUrl} 
+                              alt={qari.name}
+                              className="w-10 h-10 rounded-full object-cover border border-[rgba(255,213,79,0.3)]"
+                              onError={(e) => {
+                                e.currentTarget.src = 'https://via.placeholder.com/40';
+                              }}
+                            />
+                          ) : (
+                            <div className="w-10 h-10 rounded-full bg-[rgba(255,213,79,0.1)] 
+                                           flex items-center justify-center border border-[rgba(255,213,79,0.3)]">
+                              {qari.name[0]}
+                            </div>
+                          )}
+                          <div className="flex-1">
+                            <div className="truncate">{qari.name}</div>
+                            <div className="text-xs text-[rgba(255,213,79,0.6)]">{qari.style}</div>
+                          </div>
+                          {selectedQari.identifier === qari.identifier && (
+                            <span className="text-[#ffd54f]">✓</span>
+                          )}
                         </button>
                       ))}
                     </div>
@@ -427,6 +447,7 @@ const QuranListen = () => {
               playAyah(ayahNumber);
             }}
             nextAudioUrl={nextAudioUrl}
+            qariPhotoUrl={selectedQari.photoUrl}
           />
         )}
       </motion.div>

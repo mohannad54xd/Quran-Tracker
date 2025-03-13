@@ -12,6 +12,8 @@ import SettingsPage from './pages/SettingsPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import PrivacyPage from './pages/PrivacyPage';
+import AzkarPage from './pages/AzkarPage';
+import SpecialThanksPage from './pages/SpecialThanksPage';
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
               <Route path="/about" element={<AboutPage />} />
               <Route path="/privacy" element={<PrivacyPage />} />
               <Route path="/contact" element={<ContactPage />} />
+              <Route path="/azkar" element={<AzkarPage />} />
+              <Route path="/special-thanks" element={<SpecialThanksPage />} />
             </Routes>
           </Layout>
         </RamadanProvider>

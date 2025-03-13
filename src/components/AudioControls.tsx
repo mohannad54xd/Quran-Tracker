@@ -15,6 +15,7 @@ interface AudioControlsProps {
   onError: () => void;
   onSeek: (ayahNumber: number) => void;
   nextAudioUrl?: string;
+  qariPhotoUrl?: string; // Add this new prop
 }
 
 const AudioControls = ({
@@ -32,6 +33,7 @@ const AudioControls = ({
   onError,
   onSeek,
   nextAudioUrl,
+  qariPhotoUrl,
 }: AudioControlsProps) => {
   const [volume, setVolume] = useState(1);
   const [isVolumeOpen, setIsVolumeOpen] = useState(false);
@@ -98,17 +100,29 @@ const AudioControls = ({
               </div>
             </div>
 
-            {/* Controls and Info */}
+            {/* Updated Controls and Info */}
             <div className="flex items-center justify-between gap-4 px-2">
-              {/* Track Info */}
-              <div className="flex-1 min-w-0">
-                <p className="text-[#ffd54f] font-medium truncate text-lg">
-                  {surahName}
-                </p>
-                <div className="flex items-center gap-2">
-                  <p className="text-gray-400 text-sm truncate">{qariName}</p>
-                  <span className="text-gray-600">•</span>
-                  <p className="text-gray-400 text-sm">Ayah {ayahNumber}</p>
+              {/* Track Info with Qari Photo */}
+              <div className="flex items-center gap-3 flex-1 min-w-0">
+                {qariPhotoUrl && (
+                  <img 
+                    src={qariPhotoUrl}
+                    alt={qariName}
+                    className="w-10 h-10 rounded-full object-cover border border-[rgba(255,213,79,0.3)]"
+                    onError={(e) => {
+                      e.currentTarget.src = 'https://via.placeholder.com/40';
+                    }}
+                  />
+                )}
+                <div className="flex-1 min-w-0">
+                  <p className="text-[#ffd54f] font-medium truncate text-lg">
+                    {surahName}
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <p className="text-gray-400 text-sm truncate">{qariName}</p>
+                    <span className="text-gray-600">•</span>
+                    <p className="text-gray-400 text-sm">Ayah {ayahNumber}</p>
+                  </div>
                 </div>
               </div>
 

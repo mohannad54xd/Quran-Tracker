@@ -4,6 +4,7 @@ import { useRamadan } from '../contexts/RamadanContext';
 import Bismillah from '../components/Bismillah';
 import { quranApi, type Surah, type Ayah } from '../services/quranApi';
 import QuranDisplay from '../components/QuranDisplay';
+import TafseerModal from '../components/TafseerModal';
 
 interface Bookmark {
   surahNumber: number;
@@ -27,6 +28,11 @@ const QuranPage = () => {
   const [bookmarks, setBookmarks] = useState<Bookmark[]>(
     JSON.parse(localStorage.getItem('quranBookmarks') || '[]')
   );
+  const [selectedAyah, setSelectedAyah] = useState<{
+    number: number;
+    text: string;
+    surahNumber: number;
+  } | null>(null);
 
   useEffect(() => {
     const loadSurahs = async () => {
@@ -239,6 +245,18 @@ const QuranPage = () => {
                   >
                     <span className="text-xl">★</span>
                   </button>
+                  {/* Add Tafseer Button */}
+                  <button
+                    onClick={() => setSelectedAyah({
+                      number: ayah.numberInSurah,
+                      text: ayah.text,
+                      surahNumber: selectedSurah
+                    })}
+                    className="text-gray-400 hover:text-[#ffd54f] transition-colors px-3 py-1 
+                             rounded-lg border border-[rgba(255,213,79,0.2)] text-sm"
+                  >
+                    Tafseer
+                  </button>
                 </div>
               </div>
               <p className="text-[#ffd54f] text-2xl font-['Amiri'] text-right leading-loose">
@@ -247,6 +265,16 @@ const QuranPage = () => {
             </motion.div>
           ))}
         </div>
+        {/* Add TafseerModal at the bottom of the return statement */}
+        {selectedAyah && (
+          <TafseerModal
+            isOpen={!!selectedAyah}
+            onClose={() => setSelectedAyah(null)}
+            surahNumber={selectedAyah.surahNumber}
+            ayahNumber={selectedAyah.number}
+            ayahText={selectedAyah.text}
+          />
+        )}
       </motion.div>
     </div>
   );
