@@ -5,9 +5,10 @@ import Navbar from './Navbar';
 
 interface LayoutProps {
   children: React.ReactNode;
+  onSecretTriggered: () => void;
 }
 
-const Layout = ({ children }: LayoutProps) => {
+const Layout = ({ children, onSecretTriggered }: LayoutProps) => {
   const location = useLocation();
   const hideFooter = location.pathname === '/quran/listen' || location.pathname === '/quran';
 
@@ -18,7 +19,7 @@ const Layout = ({ children }: LayoutProps) => {
       <main className="relative z-10 flex-grow pt-20 sm:pt-24">
         {children}
       </main>
-      {!hideFooter && <Footer />}
+      {!hideFooter && <Footer onSecretTriggered={onSecretTriggered} />}
     </div>
   );
 };

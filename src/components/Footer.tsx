@@ -1,6 +1,24 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
-const Footer = () => {
+interface FooterProps {
+  onSecretTriggered: () => void;
+}
+
+const Footer = ({ onSecretTriggered }: FooterProps) => {
+  const [secretClickCount, setSecretClickCount] = useState(0);
+
+  const handleSecretClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const newCount = secretClickCount + 1;
+    setSecretClickCount(newCount);
+    
+    if (newCount === 3) {
+      onSecretTriggered();
+      setSecretClickCount(0);
+    }
+  };
+
   return (
     <footer className="bg-gradient-to-t from-black/95 to-black/60 backdrop-blur-md py-4 sm:py-0 h-auto sm:h-[80px]">
       <div className="h-full max-w-7xl mx-auto px-3 sm:px-4">
@@ -32,6 +50,15 @@ const Footer = () => {
                            hover:border-[#ffd54f]/60 transition-all duration-300"
               >
                 Special Thanks ✨
+              </Link>
+              <Link 
+                to="#"
+                onClick={handleSecretClick} 
+                className="text-gray-400 hover:text-[#ffd54f]/80 text-xs sm:text-sm
+                           px-3 py-1 rounded-full border border-gray-400/30 
+                           hover:border-[#ffd54f]/60 transition-all duration-300"
+              >
+                {secretClickCount > 0 ? "❤️".repeat(secretClickCount) : "❤️"}
               </Link>
             </div>
             <div className="flex items-center gap-4">
